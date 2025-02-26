@@ -18,7 +18,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 @Plugin(
         id = "timesync",
         name = "TimeSync",
-        version = "1.0.0",
+        version = "${project.version}",
         url = "https://arknesia.com",
         description = "Sync Minecraft World Time",
         authors = {"Lexivale"}
@@ -76,9 +76,10 @@ public class TimeSync {
         }
 
         public void advanceTime() {
+            long adjustedTicks = (this.currentTick + 6000) % TICKS_PER_DAY;
             this.currentTick = (this.currentTick + TICKS_PER_REAL_SECOND) % TICKS_PER_DAY;
 
-            if (this.currentTick == 0) {
+            if (adjustedTicks == 0) {
                 this.totalDays++;
                 updateDate();
             }
